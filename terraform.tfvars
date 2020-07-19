@@ -1,2 +1,2 @@
-project_id = "REPLACE_ME"
-region     = "us-central1"
+project_id = "rational-moon-283808"
+region     = "europe-west6"
