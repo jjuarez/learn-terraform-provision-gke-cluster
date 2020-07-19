@@ -1,16 +1,10 @@
-variable "gke_username" {
-  default     = ""
-  description = "gke username"
-}
-
-variable "gke_password" {
-  default     = ""
-  description = "gke password"
-}
-
-variable "gke_num_nodes" {
-  default     = 3
-  description = "number of gke nodes"
+locals {
+  labels        = {
+    system      = "learn"
+    partner     = "jj"
+    environment = "development"
+    project     = var.project_id
+  }
 }
 
 # GKE cluster
@@ -47,12 +41,10 @@ resource "google_container_node_pool" "primary_nodes" {
       "https://www.googleapis.com/auth/monitoring",
     ]
 
-    labels = {
-      env = var.project_id
-    }
+    labels    = local.labels
 
-    # preemptible  = true
-    machine_type = "n1-standard-1"
+    preemptible  = true
+    machine_type = var.gke_node_type
     tags         = ["gke-node", "${var.project_id}-gke"]
     metadata = {
       disable-legacy-endpoints = "true"
